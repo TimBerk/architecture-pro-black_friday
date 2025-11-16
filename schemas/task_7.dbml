@@ -1,0 +1,63 @@
+Enum OrderStatus {
+    created
+    paid
+    shipped
+    delivered
+    cancelled
+}
+
+Enum CartStatus {
+    active
+    ordered
+    abandoned
+}
+
+table orders {
+    _id ObjectId
+    user_id ObjectId
+    items json
+    status OrderStatus
+    total decimal
+    geo_zone point
+    created_at timestamp
+    updated_at timestamp
+
+    indexes {
+        geo_zone
+        user_id
+    }
+}
+
+
+table products {
+    _id ObjectId
+    name str
+    category str
+    price decimal
+    stock json
+    attributes json
+    created_at timestamp
+    updated_at timestamp
+
+    indexes {
+        category
+    }
+}
+
+
+table carts {
+    _id ObjectId
+    user_id ObjectId
+    session_id ObjectId
+    items json
+    status CartStatus
+    created_at timestamp
+    updated_at timestamp
+    expires_at timestamp
+
+    indexes {
+        user_id
+        session_id
+        status
+    }
+}
